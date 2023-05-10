@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flask Calendar</title>
+    <link href="{{ url_for('static',filename='bootstrap.min.css') }}" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+
+    {% set week_addr = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] %}
+    {% for month_addr,monthInfo in content.items()%}
+
+    <div class="col-lg-3">
+        {% with _month=false %}
+        {% if month_addr == this_month %}
+            <table style='background-color:#a6e1ec' class="table table-bordered">
+            {% set _month = true %}
+                <tr>
+                    {% for addr in week_addr %}
+                        <th>{{addr}}</th>
+                    {% endfor %}
+                </tr>
+                {% for weeks in monthInfo %}
+                <tr>
+                    {% for day in weeks %}
+                    {% if day == 0 %}
+                    <td>&nbsp</td>
+                    {% elif _month== true and day == date.day %}
+                    <td style="background-color:hotpink;">{{ day }}</td>
+                    {% else %}
+                    <td>{{ day }}</td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+       {% endif %}
+     {% endwith %}
+    </div>
+    {% endfor %}
+
+</div>
+
+</body>
+
+</html>
